@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub でお手軽文書公開</title>
+  <link rel="stylesheet" type="text/css" href="../fish.css">
+</head>
+
+<body>
+
+<h1>GitHub でお手軽文書公開</h1>
+
+<p align="right">
+著者: フィッシュ<br>
+公開日: 2018年4月14日</p>
+</p>
+
+<p>
+ちょっとした文書を公開するときに、GitHub は無料かつ簡単に使えて、更新履歴もすべて保存されるため、とても便利です。ところが、GitHub の解説ページは、チームによるプログラムの共同開発を前提としていて、様々なコマンドが解説されているので、慣れていない人にはとっつきにくく感じるものが多いです。このページでは、
+<ul>
+<li>自分が作成した文書を自分で公開する（チームの共同作業はしない）
+<li>PCとWebブラウザのみで作業が完結する
+<li>あまり色々なことは書かずに、必要最低限の手順を示す
+</ul>
+という方針で、お手軽に文書を公開する手順を示します。</p>
+
+<h2>手順1: アカウントの作成</h2>
+
+<p>
+<a href="https://github.com/">GitHub のページ</a> で、ユーザー名 (Username)、メールアドレス、パスワードを決めて入力します。
+Username is already taken と表示されたら、そのユーザー名はすでに使われているので別のユーザー名を考えます。
+緑色の Sign up for GitHub ボタンを押します。
+</p>
+<img src="signup.jpg" alt="Sign up">
+
+<p>次にプランを選びます。公開リポジトリのみ作成する場合は無料で、非公開リポジトリを作成できる有料プランもあります。いつでも有料プランにアップグレードできるので、とりあえず無料プランを選んでおけば良いでしょう。
+<blockquote>
+Unlimited public repositories for free. (公開リポジトリのみ無制限で作成できる無料プラン)
+</blockquote>
+を選んで、緑色の Continue ボタンを押します。
+アンケートに答えて緑色の Submit ボタンを押すか、skip this step でアンケートをスキップします。 
+しばらくすると GitHub から
+<blockquote>
+[GitHub] Please verify your email address.
+</blockquote>
+というようなタイトルのメールが届くので、メール中のリンクをクリックすることでメールアドレスが確認されて、GitHub のアカウントができます。
+</p>
+
+
+<h2>手順2: リポジトリの作成</h2>
+
+<p>GitHub にログインして、右上の + をクリックして New repository をクリックします。</p>
+
+<img src="newrep.jpg" alt="New repository">
+
+<p>リポジトリの作成画面が出るので、次の図のように入力します。
+<ul>
+<li>Repository name には、リポジトリの名前を入れます。ここで、リポジトリの名前を <ユーザー名>.github.io とします。たとえば、ユーザー名が kyodaisuu だったら kyodaisuu.github.io とします。
+<li>Description (optional) は、説明を入れます。入れなくても良いです。
+<li>Public を選びます。
+<li>Initialize this repository with a README をチェックします（重要）。
+<li>Create repository ボタンを押します。
+</ul>
+</p>
+
+<img src="createrep.jpg" alt="Create repository">
+
+<p>これで、リポジトリができました。リポジトリの管理画面には
+<blockquote>https://github.com/<ユーザー名>/<ユーザー名>.github.io</blockquote> からアクセスできます。たとえば <a href="https://github.com/kyodaisuu/kyodaisuu.github.io">https://github.com/kyodaisuu/kyodaisuu.github.io</a> です。公開されたホームページのアドレスは <blockquote>https://<ユーザー名>.github.io</blockquote>です。たとえば <a href="https://kyodaisuu.github.io">https://kyodaisuu.github.io</a> となります。</p>
+
+<h2>手順3: ファイルのアップロード</h2>
+
+<p>リポジトリの管理画面から、Upload Files をクリックします。</p>
+
+<img src="upload.jpg" alt="upload">
+
+<blockquote>
+Drag files here to add them to your repository
+</blockquote>
+
+と書かれている大きなエリアに、ファイルをエクスプローラやファインダからドラッグ＆ドロップします。まとめて複数のファイルを追加することもできます。
+
+<blockquote>
+choose your files
+</blockquote>
+
+から、ファイルを選ぶこともできます。
+
+Commit changes と書かれているところに、コメントを書きます。何も入れなくても自動的にコメントが入りますが、あとで編集履歴が表示されるので、簡単なコメントを入れておくと良いと思います。
+
+Commit changes ボタンを押すことで、ファイルをアップロードできます。このとき、すでにファイルが存在する場合はファイルが更新されます。
+
+<h2>付録: ディレクトリの作成</h2>
+
+<p>
+ディレクトリを作成する手順を記します。
+</p>
+<ul>
+<li>Upload files の左の Create new file ボタンを押します。
+<li>ファイル名を入力するところで、ディレクトリ名を入れてから / を入れます。たとえば、github/ と入れます。すると、ディレクトリができます。<a href="https://github.com/KirstieJane/STEMMRoleModels/wiki/Creating-new-folders-in-GitHub-repository-via-the-browser">このページ</a>の画像がわかりやすいです。
+<li>なにか適当なファイルを作成します。Edit new file のところにテキストを貼り付けて、コメントを書いて Commit new file ボタンを押します。
+</ul>
+
+<p>
+GitHub では「空のディレクトリ」は作成できないので、ディレクトリを作成するときには、このように必ずファイルをいっしょに作成します。一度ディレクトリを作成すれば、リポジトリ管理画面からそのディレクトリに入って、手順3の方法でそのディレクトリにファイルをアップロードできます。
+</p>
+
+<h2>公式のヘルプ</h2>
+
+<p><a href="https://help.github.com/">GitHub Help</a> が公式のヘルプです。この中で、このページに記したことと関連するページをまとめます。</p>
+
+<ul>
+<li><a href="https://help.github.com/articles/signing-up-for-a-new-github-account/">新規 GitHub アカウントのサインアップ</a>
+<li><a href="https://help.github.com/articles/verifying-your-email-address/">メールアドレスの確認</a>
+<li><a href="https://help.github.com/articles/creating-a-new-repository/">新規リポジトリの作成</a>
+<li><a href="https://help.github.com/categories/github-pages-basics/">GitHub Pages の基本</a>
+<li><a href="https://help.github.com/articles/adding-a-file-to-a-repository/">リポジトリへのファイルの追加</a>
+</ul>
+
+<hr>
+フィッシュ
+
+</body>
+</html>
