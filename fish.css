@@ -26,6 +26,25 @@ pre {
   background-color: #fdfaf4
 }
 
+table{
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+    border-collapse: separate;
+    border-spacing: 3px;
+}
+
+th{
+    padding: 4px 12px;
+    border:2px solid #00ff00;
+    background: #b0ffb0;
+}
+
+td{
+    padding: 4px 12px;
+    border:1px solid #00ff00;
+    background: #ffffff;
+}
+
 code {
   font-family: sans-serif;
   font-style: italic;
