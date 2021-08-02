@@ -99,8 +99,6 @@ def show_definition(modified):
 def llion(n, modified):
     if n < 1:
         return 'N<1 is not defined'
-    if n < 10:
-        return ISOLATE[n] + 'llion'
     name = ''
     while n > 999:
         name = concat(n % 1000, name, modified)
