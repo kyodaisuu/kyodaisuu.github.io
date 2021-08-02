@@ -52,7 +52,8 @@ def main():
             if args.simple:
                 print(name)
             else:
-                print('N={0} 10^{1} (10^{2} in long scale) {3}'.format(i, 3*i+3, 6*i, name))
+                print('N={0} 10^{1} (10^{2} in long scale) {3}'.format(
+                    i, 3*i+3, 6*i, name))
 
 
 def show_html(n):
@@ -100,7 +101,7 @@ def llion(n, modified):
         return 'N<1 is not defined'
     if n < 10:
         return ISOLATE[n] + 'llion'
-    name = 'llion'
+    name = ''
     while n > 999:
         name = concat(n % 1000, name, modified)
         n = n // 1000
@@ -108,21 +109,19 @@ def llion(n, modified):
     return name
 
 
-def concat(n, name, modified):
-    if n < 10:
-        if name == 'llion':
-            name = ISOLATE[n] + name
+def concat(n, suffix, modified):
+    result = base(n, modified) + suffix
+    if suffix == '':
+        if n < 10:
+            result += 'on'
         else:
-            name = ISOLATE[n] + 'lli' + name
-    else:
-        if name == 'llion':
-            name = base(n, modified)[:-1] + 'illion' # Replace the final vowel
-        else:
-            name = base(n, modified) + name
-    return name
+            result = result[:-1] + 'illion'  # Replace the final vowel
+    return result
 
 
 def base(n, modified):
+    if n < 10:
+        return ISOLATE[n] + 'lli'
     unit = n % 10
     ten = (n//10) % 10
     hun = n//100
