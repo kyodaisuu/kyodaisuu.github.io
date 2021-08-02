@@ -102,15 +102,23 @@ def llion(n, modified):
             else:
                 name = 'nilli' + name
         else:
-            if n % 1000 < 10:
-                name = ISOLATE[n % 1000] + name
-            else:
-                name = base(n % 1000, modified) + name
+            name = concat(n % 1000, name, modified)
         n = n // 1000
+    name = concat(n, name, modified)
+    return name
+
+
+def concat(n, name, modified):
     if n < 10:
-        name = ISOLATE[n] + 'lli' + name
+        if name == 'llion':
+            name = ISOLATE[n] + name
+        else:
+            name = ISOLATE[n] + 'lli' + name
     else:
-        name = base(n, modified) + name
+        if name == 'llion':
+            name = base(n, modified)[:-1] + 'illion' # Replace the final vowel
+        else:
+            name = base(n, modified) + name
     return name
 
 
