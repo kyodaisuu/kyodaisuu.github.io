@@ -10,7 +10,7 @@
 # MIT license
 
 DESCRIPTION = "show name of N'th zillion number"
-ISOLATE = ['', 'mi', 'bi', 'tri', 'quadri',
+ISOLATE = ['ni', 'mi', 'bi', 'tri', 'quadri',
            'quinti', 'sexti', 'septi', 'octi', 'noni']
 CW_UNI = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'se',
           'septe', 'octo', 'nove']  # quinqua is changed to quin
@@ -33,6 +33,8 @@ def main():
                         action='store_true', help='use modified system')
     parser.add_argument('-t', '--table', action='store_true',
                         help='show html table')
+    parser.add_argument('-s', '--simple', action='store_true',
+                        help='simple output')
     parser.add_argument('-d', '--definition',
                         action='store_true', help='show definition table')
     args = parser.parse_args()
@@ -45,8 +47,12 @@ def main():
     if args.definition:
         show_definition(args.modified)
     for i in n:
-        print('N={0} 10^{1} (10^{2} in long scale) {3}'.format(
-            i, 3*i+3, 6*i, llion(i, args.modified)))
+        if i > 0:
+            name = llion(i, args.modified)
+            if args.simple:
+                print(name)
+            else:
+                print('N={0} 10^{1} (10^{2} in long scale) {3}'.format(i, 3*i+3, 6*i, name))
 
 
 def show_html(n):
@@ -96,13 +102,7 @@ def llion(n, modified):
         return ISOLATE[n] + 'llion'
     name = 'llion'
     while n > 999:
-        if n % 1000 == 0:
-            if name == 'llion':
-                name = 'nillion'
-            else:
-                name = 'nilli' + name
-        else:
-            name = concat(n % 1000, name, modified)
+        name = concat(n % 1000, name, modified)
         n = n // 1000
     name = concat(n, name, modified)
     return name
