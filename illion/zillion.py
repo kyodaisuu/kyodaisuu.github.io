@@ -127,9 +127,9 @@ def base(n, modified):
     ten = (n//10) % 10
     hun = n//100
     if ten == 0:
-        prec = PREC_TEN[hun]
+        prec = PREC_HUN[hun]
     else:
-        prec = PREC_HUN[ten]
+        prec = PREC_TEN[ten]
     if modified:
         name = SIMP_UNI[unit]
     else:
