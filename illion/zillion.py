@@ -110,10 +110,7 @@ def llion(n, modified):
 def concat(n, suffix, modified):
     result = base(n, modified) + suffix
     if suffix == '':
-        if n < 10:
-            result += 'on'
-        else:
-            result = result[:-1] + 'illion'  # Replace the final vowel
+        result += 'on'
     return result
 
 
@@ -146,7 +143,7 @@ def base(n, modified):
                 name += 'n'
     name += TEN[ten]
     name += HUN[hun]
-    return name
+    return name[:-1] + 'illi'  # Replace the final vowel
 
 
 if __name__ == "__main__":
