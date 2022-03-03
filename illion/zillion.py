@@ -92,7 +92,7 @@ def show_definition(modified):
             '<tr><td>{0} <td>{1} <td>{2} <td>{3}</tr>'.format(i, unit, ten, hun))
     print('</table>')
     if not modified:
-        print('<p><sup>*</sup>Note: when it is immediately before a component marked with <sup>S</sup> or <sup>N</sup>, "tre" increases to "tres" and "se" to "ses" or "sex" as appropriate. Similarly "septe" and "nove" increase to "septem" and "novem" or "septen" and "noven" immediately before components marked with <sup>M</sup> or <sup>N</sup>.</p>')
+        print('<p><sup>*</sup>Note: when it is immediately before a component marked with <sup>S</sup> or <sup>X</sup>, "tre" increases to "tres" and "se" to "ses" or "sex" as appropriate. Similarly "septe" and "nove" increase to "septem" and "novem" or "septen" and "noven" immediately before components marked with <sup>M</sup> or <sup>N</sup>.</p>')
         print('<p><sup>**</sup>quin is changed from original quinqua.</p>')
 
 
