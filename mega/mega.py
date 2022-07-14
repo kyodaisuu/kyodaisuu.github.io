@@ -72,8 +72,9 @@ def pow2mod(n, d):
     # and as 10^d is divisible by φ(5^d) when d>1
     # 2^(10^d) = 1 (mod 5^d) for d>1
     # Therefore 2^(10^d + d) = 2^d (mod 10^d)
-    # 2^n can be recursively calculated as 2^n = 2^((n-d) % 10^d + d) (mod 10^d) 
-    n = (n - d) % r + d
+    # 2^n can be recursively calculated as 2^n = 2^((n-d) % 10^d + d) (mod 10^d) for n>d
+    if n > d:
+        n = (n - d) % r + d
     # Now we calculate (2^n) mod (10^d)
     # We use powmod function for efficient calculation.
     return powmod(2, n, r)
