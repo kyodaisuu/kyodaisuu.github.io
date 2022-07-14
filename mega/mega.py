@@ -59,7 +59,6 @@ def powmod(a, b, r):
 
 def pow2mod(n, d):
     """Last d digits of 2^n. Namely 2^n mod (10^d)"""
-    r = 10**d
     if d == 1:
         if n == 0:
             return 1
@@ -73,6 +72,7 @@ def pow2mod(n, d):
     # 2^(10^d) = 1 (mod 5^d) for d>1
     # Therefore 2^(10^d + d) = 2^d (mod 10^d)
     # 2^n can be recursively calculated as 2^n = 2^((n-d) % 10^d + d) (mod 10^d) for n>d
+    r = 10**d
     if n > d:
         n = (n - d) % r + d
     # Now we calculate (2^n) mod (10^d)
