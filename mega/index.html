@@ -15,7 +15,7 @@
 <p><a href="https://mathworld.wolfram.com/Mega.html">Mega</a> is a large number defined as ② in the <a href="https://mathworld.wolfram.com/CircleNotation.html">circle notation</a>.
 Mega can be calculated recursively as \(m_{256}\) in the sequence defined by \(m_0 = 256\) and \(m_{n + 1} = m_n^{m_n}\).</p>
 
-<p><a href="https://googology.fandom.com/wiki/Talk:Mega#Precise_calculation_of_mega">Tetramur showed</a> that mega can also be caucluated by \(256^{256^{m_{256}}}\) where \(m_0 = 0\) and \(m_{n+1} = 256^{m_n} + m_n\).
+<p><a href="https://googology.fandom.com/wiki/Talk:Mega#Precise_calculation_of_mega">Tetramur showed</a> that mega can also be calcluated by \(256^{256^{m_{256}}}\) where \(m_0 = 0\) and \(m_{n+1} = 256^{m_n} + m_n\).
 I made a program to calculate the last digits of mega using this calculation method.</p>
 
 <ul>
@@ -25,8 +25,8 @@ I made a program to calculate the last digits of mega using this calculation met
 <p>From the above recursive formula, the last d digits of mega can be obtained with a function to obtain the last d digits of \(256^n\) recursively. As \(256^n = 2^{8n}\), we need a function to obtain last d digits of \(2^n\) recursively. The algorithm for this calculation is as follows.</p>
 
 <ul>
-  <li>When \(d=1\), \(2^n \% 10\) = permutation of {2, 4, 8, 6} for \(n>0\), where a%b denotes remainder of a/b. Therefore \(2^n\) = \(2^{(n-1) \% 4 + 1}\) (mod 10) for \(n>0\).</li>
-  <li>When \(d>1\), \(2^{\varphi{(5^d)}} = 1\) (mod \(5^d\)) by <a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler's theorem</a>. As \(10^d\) is divisible by \(\varphi(5^d) = 5^d(1-1/5) = 4\cdot 5^{d-1}\) when \(d>1\),
+  <li>Case 1: when \(d=1\). \(2^n \% 10\) = permutation of {2, 4, 8, 6} for \(n>0\), where a%b denotes remainder of a/b. Therefore \(2^n\) = \(2^{(n-1) \% 4 + 1}\) (mod 10) for \(n>0\).</li>
+  <li>Case 2: when \(d>1\). \(2^{\varphi{(5^d)}} = 1\) (mod \(5^d\)) by <a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler's theorem</a>. As \(10^d\) is divisible by \(\varphi(5^d) = 5^d(1-1/5) = 4\cdot 5^{d-1}\) when \(d>1\),
 \(2^{10^d} = 1\) (mod \(5^d\)) for \(d>1\). Therefore \(2^{10^d + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% (10^d) + d}\) (mod \(10^d\)).
 </ul>
 
