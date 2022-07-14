@@ -27,7 +27,7 @@ I made a program to calculate the last digits of mega using this calculation met
 <ul>
   <li>Case 1: when \(d=1\). \(2^n \% 10\) = permutation of {2, 4, 8, 6} for \(n>0\), where a%b denotes remainder of a/b. Therefore \(2^n\) = \(2^{(n-1) \% 4 + 1}\) (mod 10) for \(n>0\).</li>
   <li>Case 2: when \(d>1\). \(2^{\varphi{(5^d)}} = 1\) (mod \(5^d\)) by <a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler's theorem</a>. As \(10^d\) is divisible by \(\varphi(5^d) = 5^d(1-1/5) = 4\cdot 5^{d-1}\) when \(d>1\),
-\(2^{10^d} = 1\) (mod \(5^d\)) for \(d>1\). Therefore \(2^{10^d + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% (10^d) + d}\) (mod \(10^d\)).
+\(2^{10^d} = 1\) (mod \(5^d\)) for \(d>1\). Therefore \(2^{10^d + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% (10^d) + d}\) (mod \(10^d\)) for \(n>d\).
 </ul>
 
 <p>\(a^b \% r \) for \(r=10^d\) is also calculated recursively by dividing b with a parameter c so that b=qc+m. Then we have \(a^b \% r= (a^c \% r)^q \% r \cdot a^m \% r\). Although c=2 has the maximum efficiency, to avoid having too much recursion depth for saving memory, the program changes the value of c with the size of b.</p>
