@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Last digits of mega</title>
+  <title>Last 10000 digits of mega</title>
   <link rel="stylesheet" type="text/css" href="../fish.css">
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
@@ -32,8 +32,17 @@ I made a program to calculate the last digits of mega using this calculation met
 
 <p>\(a^b \% r \) for \(r=10^d\) is also calculated recursively by dividing b with a parameter c so that b=qc+m. Then we have \(a^b \% r= (a^c \% r)^q \% r \cdot a^m \% r\). Although c=2 has the maximum efficiency, to avoid having too much recursion depth for saving memory, the program changes the value of c with the size of b.</p>
 
+<p>Here is the calculation result.</p>
+
+<ul>
+  <li><a href="mega10.txt">Last 10 digits of mega</a>
+  <li><a href="mega100.txt">Last 100 digits of mega</a>
+  <li><a href="mega1000.txt">Last 1000 digits of mega</a>
+  <li><a href="mega10000.txt">Last 10000 digits of mega</a>
+</ul>
+    
 <hr>
-Author: <a href="https://googology.wikia.org/wiki/User:Kyodaisuu">Fish</a> - for contacting me, use <a href="https://twitter.com/kyodaisuu">Twitter</a> or <a href="https://googology.wikia.org/wiki/User_talk:Kyodaisuu">Googology Wiki</a>.
+<p><a href="https://googology.wikia.org/wiki/User:Kyodaisuu">Fish</a> published this page on 14 July, 2022.</p>
 
 </body>
 </html>
