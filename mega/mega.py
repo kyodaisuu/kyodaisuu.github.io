@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Calculate last digit of mega
+# See https://kyodaisuu.github.io/mega/
 # Author: Fish
+# MIT License
 
 def main():
     """Calculate last digits of mega"""
@@ -43,15 +45,15 @@ def powmod(a, b, r):
     if b <= 2:
         return (a**b) % r
     if b <= 2**100:
-        rec = 2
+        c = 2
     # For minimising recursion
     elif b <= 2**10000:
-        rec = 2**100
+        c = 2**100
     else:
-        rec = 2**10000
-    q, m = divmod(b, rec)  # b = q rec + m
-    # Calculate a^b = (a^rec)^q * a^m with mod r
-    result = powmod(powmod(a, rec, r), q, r) * powmod(a, m, r)
+        c = 2**10000
+    q, m = divmod(b, c)  # b = qc + m
+    # Calculate a^b = (a^c)^q * a^m with mod r
+    result = powmod(powmod(a, c, r), q, r) * powmod(a, m, r)
     return result % r
 
 
@@ -61,20 +63,17 @@ def pow2mod(n, d):
     if d == 1:
         if n == 0:
             return 1
-        # When d=1 and n>0, as 2^n mod 10 = permutation of {2, 4, 8, 6},
-        # 2^n mod 10 = 2^((n-1) mod 4 + 1) mod 10
+        # When d=1 and n>0, as 2^n % 10 = permutation of {2, 4, 8, 6},
+        # 2^n = 2^((n-1) % 4 + 1) (mod 10).
         return 2**((n-1) % 4 + 1) % 10
     # Now for d > 1.
-    # From Euler's theeorem, 2^ψ(5^d) = 1 (mod 5^d)
-    # where ψ(5^d) = (5^d)(1-1/5) = 4*5^(d-1)
-    # and as 10^d is divisible by ψ(5^d) when d>1
+    # From Euler's theeorem, 2^φ(5^d) = 1 (mod 5^d)
+    # where φ(5^d) = (5^d)(1-1/5) = 4*5^(d-1)
+    # and as 10^d is divisible by φ(5^d) when d>1
     # 2^(10^d) = 1 (mod 5^d) for d>1
     # Therefore 2^(10^d + d) = 2^d (mod 10^d)
-    # It means that when n>= 10^d + d, let N = n mod 10^d and
-    # (1) when N >= d, 2^n = 2^N (mod 10^d)
-    # (2) otherwise 2^n = 2^(N + 10^d) (mod 10^d)
-    if n >= 10**d + d:
-        n = (n - d) % r + d
+    # 2^n can be recursively calculated as 2^n = 2^((n-d) % 10^d + d) (mod 10^d) 
+    n = (n - d) % r + d
     # Now we calculate (2^n) mod (10^d)
     # We use powmod function for efficient calculation.
     return powmod(2, n, r)
