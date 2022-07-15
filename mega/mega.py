@@ -79,7 +79,8 @@ def pow2mod(n, d):
 def pow256mod(n, d):
     """Last d digits of 256^n"""
     # 256^n = 2^(8 * n)
-    return pow2mod(8*n, d)
+    # For the recursion of pow2 mod function to work, the result should be larger than d
+    return (pow2mod(8*n, d) - d) % (10**d) + d
 
 
 def mn(n, d):
