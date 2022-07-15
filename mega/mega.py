@@ -11,8 +11,6 @@ def main():
     import time
     # Set high recursion limit, the maximum depth of the Python stack.
     # as this program uses high recursion.
-    # High recursion appears at powmod function, where the recursion level
-    # depends on the parameter rec.
     sys.setrecursionlimit(10000)
     # Test that this program is working properly
     test()
