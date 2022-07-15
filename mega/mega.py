@@ -94,7 +94,7 @@ def mn(n, d):
         return 0
     m = mn(n-1, d)
     m = pow256mod(m, d) + m
-    return m % (10**d)
+    return (m-d) % (10**d) + d
 
 
 def mega(d):
