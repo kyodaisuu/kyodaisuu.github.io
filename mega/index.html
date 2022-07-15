@@ -22,13 +22,9 @@ I made a Python program to calculate the last digits of mega using this calculat
   <li><a href="https://github.com/kyodaisuu/kyodaisuu.github.io/blob/main/mega/mega.py">Source code of the program</a></li>
 </ul>
 
-<p>From the above recursive formula, the last d digits of mega can be obtained with a function to obtain the last d digits of \(256^n\) recursively. As \(256^n = 2^{8n}\), we need a function to obtain last d digits of \(2^n\) recursively. The algorithm for this calculation is as follows.</p>
-
-<ul>
-  <li>Case 1: when \(d=1\). \(2^n \% 10\) = permutation of {2, 4, 8, 6} for \(n>0\), where a%b denotes remainder of a/b. Therefore \(2^n\) = \(2^{(n-1) \% 4 + 1}\) (mod 10) for \(n>0\).</li>
-  <li>Case 2: when \(d>1\). \(2^{\varphi{(5^d)}} = 1\) (mod \(5^d\)) by <a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler's theorem</a>. As \(10^d\) is divisible by \(\varphi(5^d) = 5^d(1-1/5) = 4\cdot 5^{d-1}\) when \(d>1\),
-\(2^{10^d} = 1\) (mod \(5^d\)) for \(d>1\). Therefore \(2^{10^d + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% (10^d) + d}\) (mod \(10^d\)) for \(n>d\).
-</ul>
+<p>From the above recursive formula, the last d digits of mega can be obtained with a function to obtain the last d digits of \(256^n\) recursively. As \(256^n = 2^{8n}\), we need a function to obtain last d digits of \(2^n\) recursively. The algorithm for this calculation is as follows.
+\(2^{\varphi{(5^d)}} = 1\) (mod \(5^d\)) by <a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler's theorem</a>, where \(\varphi(5^d) = 5^d(1-1/5) = 4\cdot 5^{d-1}\).
+Therefore \(2^{\varphi{(5^d)} + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% \varphi{(5^d)} + d}\) (mod \(10^d\)) for \(n>d\).</p>
 
 <p>\(a^b \% r \) for \(r=10^d\) is also calculated recursively by dividing b with a parameter c so that b=qc+m. Then we have \(a^b \% r= (a^c \% r)^q \% r \cdot a^m \% r\). Although c=2 has the maximum efficiency, to avoid having too much recursion depth for saving memory, the program changes the value of c with the size of b.</p>
 
@@ -40,7 +36,13 @@ I made a Python program to calculate the last digits of mega using this calculat
   <li><a href="mega1000.txt">Last 1000 digits of mega</a> calculated in 58.8 seconds
   <li><a href="mega10000.txt">Last 10000 digits of mega</a> calculated in 48300 seconds
 </ul>
-    
+
+<h2>Revision</h2>
+
+<ul>
+<li>2022/07/14: Published this page.</li>
+<li>2022/07/15: <a href="https://github.com/kyodaisuu/kyodaisuu.github.io/commit/3ba130c2ede1e3022929b94d22ea213c4535e3f5">Update the algorithm</a> for calculating last digits of \(2^n\).</li>
+</ul>
 <hr>
 <p><a href="https://googology.wikia.org/wiki/User:Kyodaisuu">Fish</a> published this page on 14 July, 2022.</p>
 
