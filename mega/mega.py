@@ -11,6 +11,8 @@ def main():
     import time
     # Set high recursion limit, the maximum depth of the Python stack.
     # as this program uses high recursion.
+    # High recursion appears at powmod function, where the recursion level
+    # depends on the parameter rec.
     sys.setrecursionlimit(10000)
     # Test that this program is working properly
     test()
@@ -29,13 +31,11 @@ def main():
 
 def test():
     """Test calculation"""
-    assert pow2mod(5, 1) == 2
     assert pow2mod(23, 1) == 8
     assert pow2mod(1003, 3) == 8
     assert pow2mod(234000, 7) == 1749376
-    assert mega(1) == 6
-    assert mega(3) == 656
-    assert mega(10) == 9660742656
+    for d in range(17):
+        assert mega(d) == 1993539660742656 % (10**d)
 
 
 def powmod(a, b, r):
@@ -102,7 +102,7 @@ def mega(d):
     """Last d digits of Mega"""
     d = int(d)
     if d < 1:
-        d = 1
+        return 0
     m = mn(256, d)
     m = pow256mod(m, d)
     m = pow256mod(m, d)
