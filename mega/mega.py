@@ -59,12 +59,11 @@ def pow2mod(n, d):
     # where φ(5^d) = (5^d)(1-1/5) = 4*5^(d-1)
     # Therefore 2^(φ(5^d) + d) = 2^d (mod 10^d)
     # 2^n can be recursively calculated as 2^n = 2^((n-d) % φ(5^d) + d) (mod 10^d) for n>d
-    r = 10**d
     if n > d:
         n = (n - d) % (4 * 5**(d-1)) + d
     # Now we calculate (2^n) mod (10^d)
     # We use powmod function for efficient calculation.
-    return powmod(2, n, r)
+    return powmod(2, n, 10**d)
 
 
 def pow256mod(n, d):
