@@ -16,7 +16,7 @@
 Mega can be calculated recursively as \(m_{256}\) in the sequence defined by \(m_0 = 256\) and \(m_{n + 1} = m_n^{m_n}\).</p>
 
 <p><a href="https://googology.fandom.com/wiki/Talk:Mega#Precise_calculation_of_mega">Tetramur showed</a> that mega can also be calcluated by \(256^{256^{m_{256}}}\) where \(m_0 = 0\) and \(m_{n+1} = 256^{m_n} + m_n\).
-I made a program to calculate the last digits of mega using this calculation method.</p>
+I made a Python program to calculate the last digits of mega using this calculation method.</p>
 
 <ul>
   <li><a href="https://github.com/kyodaisuu/kyodaisuu.github.io/blob/main/mega/mega.py">Source code of the program</a></li>
@@ -35,10 +35,10 @@ I made a program to calculate the last digits of mega using this calculation met
 <p>Here is the calculation result.</p>
 
 <ul>
-  <li><a href="mega10.txt">Last 10 digits of mega</a>
-  <li><a href="mega100.txt">Last 100 digits of mega</a>
-  <li><a href="mega1000.txt">Last 1000 digits of mega</a>
-  <li><a href="mega10000.txt">Last 10000 digits of mega</a>
+  <li><a href="mega10.txt">Last 10 digits of mega</a> calculated in 0.00688 seconds
+  <li><a href="mega100.txt">Last 100 digits of mega</a> calculated in 0.227 seconds
+  <li><a href="mega1000.txt">Last 1000 digits of mega</a> calculated in 58.8 seconds
+  <li><a href="mega10000.txt">Last 10000 digits of mega</a> calculated in 48300 seconds
 </ul>
     
 <hr>
