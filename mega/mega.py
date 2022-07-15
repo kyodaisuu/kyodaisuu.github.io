@@ -55,22 +55,13 @@ def powmod(a, b, r):
 
 def pow2mod(n, d):
     """Last d digits of 2^n. Namely 2^n mod (10^d)"""
-    if d == 1:
-        if n == 0:
-            return 1
-        # When d=1 and n>0, as 2^n % 10 = permutation of {2, 4, 8, 6},
-        # 2^n = 2^((n-1) % 4 + 1) (mod 10).
-        return 2**((n-1) % 4 + 1) % 10
-    # Now for d > 1.
     # From Euler's theeorem, 2^φ(5^d) = 1 (mod 5^d)
     # where φ(5^d) = (5^d)(1-1/5) = 4*5^(d-1)
-    # and as 10^d is divisible by φ(5^d) when d>1
-    # 2^(10^d) = 1 (mod 5^d) for d>1
-    # Therefore 2^(10^d + d) = 2^d (mod 10^d)
-    # 2^n can be recursively calculated as 2^n = 2^((n-d) % 10^d + d) (mod 10^d) for n>d
+    # Therefore 2^(φ(5^d) + d) = 2^d (mod 10^d)
+    # 2^n can be recursively calculated as 2^n = 2^((n-d) % φ(5^d) + d) (mod 10^d) for n>d
     r = 10**d
     if n > d:
-        n = (n - d) % r + d
+        n = (n - d) % (4 * 5**(d-1)) + d
     # Now we calculate (2^n) mod (10^d)
     # We use powmod function for efficient calculation.
     return powmod(2, n, r)
