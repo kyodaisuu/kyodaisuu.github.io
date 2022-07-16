@@ -24,17 +24,17 @@ I made a Python program to calculate the last digits of mega using this calculat
 
 <p>From the above recursive formula, the last d digits of mega can be obtained with a function to obtain the last d digits of \(256^n\) recursively. As \(256^n = 2^{8n}\), we need a function to obtain last d digits of \(2^n\) recursively. The algorithm for this calculation is as follows.
 \(2^{\varphi{(5^d)}} = 1\) (mod \(5^d\)) by <a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler's theorem</a>, where \(\varphi(5^d) = 5^d(1-1/5) = 4\cdot 5^{d-1}\).
-Therefore \(2^{\varphi{(5^d)} + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% \varphi(5^d) + d}\) (mod \(10^d\)) for \(n>d\). Note that in the recursion process \(n\%(10^d)\) is the input variable instead of n. As \(10^d\) is divisible by \(\varphi(5^d)\) for d>1, \(n\%\varphi(5^d) = (n\%(10^d))\%\varphi(5^d)\) and the recursion works. There is no problem �for d=1 because \(256^n\%10\) = 6 for n>0.</p>
+Therefore \(2^{\varphi{(5^d)} + d} = 2^d\) (mod \(10^d\)) and the last d digits of \(2^n\) can be recursively calculated as \(2^n = 2^{(n-d) \% \varphi(5^d) + d}\) (mod \(10^d\)) for \(n>d\). Note that in the recursion process \(n\%(10^d)\) is the input variable instead of n. As \(10^d\) is divisible by \(\varphi(5^d)\) for d>1, \(n\%\varphi(5^d) = (n\%(10^d))\%\varphi(5^d)\) and the recursion works. There is no problem for d=1 because \(256^n\%10\) = 6 for n>0.</p>
 
 <p>\(a^b \% r \) for \(r=10^d\) is also calculated recursively by dividing b with a parameter c so that b=qc+m. Then we have \(a^b \% r= (a^c \% r)^q \% r \cdot a^m \% r\). Although c=2 has the maximum efficiency, to avoid having too much recursion depth for saving memory, the program changes the value of c with the size of b.</p>
 
 <p>Here is the calculation result.</p>
 
 <ul>
-  <li><a href="mega10.txt">Last 10 digits of mega</a> calculated in 0.00488 seconds
-  <li><a href="mega100.txt">Last 100 digits of mega</a> calculated in 0.184 seconds
-  <li><a href="mega1000.txt">Last 1000 digits of mega</a> calculated in 47.1 seconds
-  <li><a href="mega10000.txt">Last 10000 digits of mega</a> calculated in 44700 seconds
+  <li><a href="mega10.txt">Last 10 digits of mega</a> calculated in 0.00688 seconds
+  <li><a href="mega100.txt">Last 100 digits of mega</a> calculated in 0.227 seconds
+  <li><a href="mega1000.txt">Last 1000 digits of mega</a> calculated in 58.8 seconds
+  <li><a href="mega10000.txt">Last 10000 digits of mega</a> calculated in 48300 seconds
 </ul>
 
 <h2>Revision</h2>
