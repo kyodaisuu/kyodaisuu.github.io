@@ -81,10 +81,10 @@ def mn(n, d):
       (2) 256^(m(n-1)) + m(n-1) otherwise
     """
     if n < 4:
-        return (0, 1, 257, 256**257+257)[n]
+        return (0, 1, 257, 256**257+257)[n] % (10**d)
     m = mn(n-1, d)
     m = pow256mod(m, d) + m
-    return (m-d) % (10**d) + d
+    return m % (10**d)
 
 
 def mega(d):
