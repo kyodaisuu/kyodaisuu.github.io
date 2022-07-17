@@ -80,8 +80,8 @@ def mn(n, d):
       (1) 0 when n = 0
       (2) 256^(m(n-1)) + m(n-1) otherwise
     """
-    if n == 3:
-        return 256**257+257
+    if n < 4:
+        return (0, 1, 257, 256**257+257)[n]
     m = mn(n-1, d)
     m = pow256mod(m, d) + m
     return (m-d) % (10**d) + d
