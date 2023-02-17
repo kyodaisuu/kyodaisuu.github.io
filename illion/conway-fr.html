@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le convertisseur des -illion de Conway</title>
+  <link rel="stylesheet" type="text/css" href="../fish.css">
+</head>
+
+<body>
+
+<h1>Le convertisseur des -illion de Conway</h1>
+
+<p align="right">
+Écrit par <a href="https://googology.fandom.com/fr/wiki/Utilisateur:Kyodaisuu">Fish</a> le 17 février 2023.<br>
+[ <a href="conway.html">English</a> | Français ]
+</p>
+
+<p>Le nom d'une puissance de 10, comme <a href="?power=6">million</a>, <a href="?power=12">billion</a>, <a href="?power=18">trillion</a>, <a href="?power=24">quadrillion</a>, <a href="?power=32">quintillion</a>, <a href="?power=600">centillion</a>, <a href="?power=6000000">millinillinillion</a>, avec le <a href="https://googology.fandom.com/fr/wiki/-llion">système de Conway-Wechsler-Miakinen</a> est montré.</p>
+
+<div style="text-align: center;
+   margin: 10px 10px; padding: 8px;
+   border: 5px ridge green;
+   border-radius: 20px 20px 20px 20px / 20px 20px 20px 20px ;
+   font-family: helvetica, sans-serif;
+   background-color: #fffdfc">
+<p>Montrer 10^<input type="text" name="power" id="power" size="35" value="" onkeyup="updatePower()"></p>
+<p style="display: inline;">= <div id="factor" style="display: inline;">un</div> <input type="text" name="illion" id="illion" size="30" value="" onkeyup="updateIllion()">-illi<div id="suffix" style="display: inline;">on</div></p>
+<p>dans l'échelle <input type="radio" id="long" name="scale" value="long" checked="checked" onchange="updatePower()" />longue
+<input type="radio" id="short" name="scale" value="short" onchange="updatePower()" />courte</p>
+</div>
+
+<div id="result" style="word-break: break-all;"></div>
+<div id="lang" style="display: none;">fr</div>
+
+<script src="illion.min.js"></script>
+
+<hr>
+<p><a href="https://github.com/kyodaisuu/kyodaisuu.github.io/blob/main/illion/illion.js">Source codeLe code source</a> de ce convertisseur en ligne est disponible. Une <a href="index.html#software">version Python</a> pour le calcul hors ligne est également disponible.</p>
+
+<p>Auteur: <a href="https://googology.fandom.com/fr/wiki/Utilisateur:Kyodaisuu">Fish</a> - pour me contacter, utilisez <a href="https://twitter.com/kyodaisuu">Twitter</a> ou <a href="https://googology.fandom.com/fr/wiki/Mur:Kyodaisuu">Wiki Googologie</a>.</p>
+
+</body>
+</html>
