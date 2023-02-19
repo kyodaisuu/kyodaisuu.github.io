@@ -318,31 +318,13 @@ function llion(n) {
   if (isNaN(intN) || intN < 1) {
     return ''
   }
-  if (intN < 10) {
-    return `${ISOLATE[n]}lli`
-  }
-  let name = 'lli'
+  let name = ''
   while (n.length > 3) {
-    name = concat(parseInt(n.slice(-3), 10), name)
+    name = base(parseInt(n.slice(-3), 10)) + name
     n = n.slice(0, -3)
-    intN = parseInt(n, 10)
   }
-  name = concat(intN, name)
-  return name
-}
-
-function concat(n, name) {
-  if (n < 10) {
-    if (name === 'lli') {
-      name = ISOLATE[n] + name
-    } else {
-      name = `${ISOLATE[n]}lli${name}`
-    }
-  } else if (name === 'lli') {
-    name = `${base(n).slice(0, -1)}illi` // Replace the final vowel
-  } else {
-    name = base(n) + name
-  }
+  intN = parseInt(n, 10)
+  name = base(intN) + name
   return name
 }
 
@@ -350,6 +332,9 @@ function base(n) {
   const unit = n % 10
   const ten = Math.floor(n / 10) % 10
   const hun = Math.floor(n / 100)
+  if (n < 10) {
+    return `${ISOLATE[n]}lli`
+  }
   let prec = ''
   if (ten === 0) {
     prec = PREC_HUN[hun]
@@ -382,5 +367,6 @@ function base(n) {
   }
   name += TEN[ten]
   name += HUN[hun]
+  name = `${name.slice(0, -1)}illi` // Replace the final vowel
   return name
 }
