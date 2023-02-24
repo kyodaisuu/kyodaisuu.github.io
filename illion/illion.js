@@ -298,7 +298,10 @@ function calcIllion() {
   if (isNaN(Number(illion)) || illion < 1) {
     return ''
   }
-  const name = `${factor} ${llion(textIllion)}${suffix}`
+  let name = `${factor} ${llion(textIllion)}${suffix}`
+  if (LANG === 'fr' && factor !== 'un') {
+    name += 's'
+  }
   let textPower = document.getElementById('power').value
   textPower = textPower.trim().replace(/^0+/u, '')
   let output = `<p>10<sup>${textPower}</sup> ${MESSAGE.result1}<br>`
