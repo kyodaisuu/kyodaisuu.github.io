@@ -7,7 +7,6 @@ License: MIT License
 // Precision
 const PREC = 10 // Numbers of digits after the decimal point to show
 const DELTA = 2 ** -50 // Allowable relative error for the Newton method
-const UPPER_LIMIT = 2n ** 2n ** 25n
 
 // Input characters
 const VALID_CHAR = '1234567890+-*/^()'
@@ -453,9 +452,6 @@ function evaluate(inputEquation) {
   try {
     result = eval(bigEquation)
   } catch (e) {
-    result = 'error'
-  }
-  if (!result || result > UPPER_LIMIT) {
     result = 'error'
   }
   return {
