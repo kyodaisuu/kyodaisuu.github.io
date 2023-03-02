@@ -96,6 +96,15 @@ td {
     table-layout: fixed;
 }
 
+.inputpanel {
+    text-align: center;
+    margin: 10px 10px; padding: 8px;
+    border: 5px ridge green;
+    border-radius: 20px 20px 20px 20px / 20px 20px 20px 20px ;
+    font-family: helvetica, sans-serif;
+    background-color: #fffdfc">
+}
+
 @media screen and (max-width: 799px){
   .widescreen { display:none;}
 }
@@ -178,8 +187,7 @@ td {
 strong {
   font-weight: bold;
   font-size: large;
-  margin: 5px;
-  padding: 3px;
+  padding: 7px;
   background-color: #ddffdd; 
 }
 
