@@ -7,12 +7,19 @@ License: MIT License
 // Precision
 const PREC = 10 // Numbers of digits after the decimal point to show
 const DELTA = 2 ** -50 // Allowable relative error for the Newton method
+const UPPER_LIMIT = 2n ** 2n ** 25n
+
+// Input characters
+const VALID_CHAR = '1234567890+-*/^()'
+const NUM_CHAR = '1234567890'
 
 // i18n
 const LANG = document.getElementById('lang').textContent
 const MESSAGE = {
   en: {
-    help: 'Please input a number in either of the 2 boxes above.',
+    show: 'Show',
+    radio: '<p>in the <input type="radio" id="short" name="scale" value="short" checked="checked" onchange="updatePower()" />short scale<input type="radio" id="long" name="scale" value="long" onchange="updatePower()" />long scale</p>',
+    help: '<p>Please input a number in either of the 2 boxes above.</p><p>Equation with characters +-*/^() is available.</p>',
     result: 'Result',
     result1: ' is called',
     result2: 'in the ',
@@ -38,7 +45,9 @@ const MESSAGE = {
     deci: 'deci'
   },
   fr: {
-    help: 'Veuillez saisir un numéro dans l\'une des deux cases ci-dessus.',
+    show: 'Montrer',
+    radio: '<p>dans l\'échelle <input type="radio" id="long" name="scale" value="long" checked="checked" onchange="updatePower()" />longue<input type="radio" id="short" name="scale" value="short" onchange="updatePower()" />courte</p>',
+    help: '<p>Veuillez saisir un numéro dans l\'une des deux cases ci-dessus.</p><p>L\'équation avec les caractères +-*/^() est disponible.</p>',
     result: 'Résultat',
     result1: 'est appelé',
     result2: 'dans le nom de l\'échelle ',
@@ -79,12 +88,14 @@ window.onload = function () {
 
 function updateIllion() {
   const textIllion = document.getElementById('illion').value
-  if (!isNumeric(textIllion) || textIllion.includes('.') || Number(textIllion) < 1) {
+  const result = evaluate(textIllion)
+  document.getElementById('illion').value = result.equation
+  if (result.result === 'error' || result.result < 1) {
     document.getElementById('power').value = ''
     clearResult()
     return
   }
-  const illion = BigInt(textIllion)
+  const illion = result.result
   const scale = getScale()
   let p = illion * 3n + 3n
   if (scale === 'long') {
@@ -98,13 +109,15 @@ function updateIllion() {
 
 function updatePower() {
   const textPower = document.getElementById('power').value
-  if (!isNumeric(textPower) || textPower.includes('.') || Number(textPower) < 1) {
+  const result = evaluate(textPower)
+  document.getElementById('power').value = result.equation
+  if (result.result === 'error' || result.result < 1) {
     document.getElementById('illion').value = ''
     document.getElementById('suffix').textContent = 'on'
     clearResult()
     return
   }
-  const power = BigInt(textPower)
+  const power = result.result
   const scale = getScale()
   const factor = power % 3n
   const strFactor = [MESSAGE.one, MESSAGE.ten, MESSAGE.hundred][factor]
@@ -134,17 +147,27 @@ function updatePower() {
 }
 
 function showResult() {
-  let html = `<h2>${MESSAGE.result}</h2>`
-  html += `<ul><li>${calcIllion()}</li>`
+  const illion = calcIllion()
+  let html = `<h2>${MESSAGE.result}</h2>\n<ul>`
+  if (illion.length > 1000) {
+    html += permaLink()
+  }
+  html += `<li>${illion}</li>`
   html += `<li>${calcDigit()}</li></ul>`
   html += permaLink()
   document.getElementById('result').innerHTML = html
 }
 
 function permaLink() {
-  let textPower = document.getElementById('power').value
-  textPower = textPower.trim().replace(/^0+/u, '')
-  let permalink = `?power=${textPower}`
+  let permalink
+  const textIllion = document.getElementById('illion').value
+  if (isNumeric(textIllion)) {
+    let textPower = document.getElementById('power').value
+    textPower = textPower.trim().replace(/^0+/u, '')
+    permalink = `?power=${textPower}`
+  } else {
+    permalink = `?illion=${textIllion}`
+  }
   if (getScale() !== MESSAGE.defaultscale) {
     permalink += `&scale=${getScale()}`
   }
@@ -154,6 +177,7 @@ function permaLink() {
 }
 
 function initialize() {
+  setInputpanel()
   const scale = getParam('scale')
   if (scale === 'short') {
     document.getElementById('short').checked = true
@@ -161,8 +185,22 @@ function initialize() {
   if (scale === 'long') {
     document.getElementById('long').checked = true
   }
+  let illion = getParam('illion')
+  if (illion) {
+    const result = evaluate(illion)
+    if (result.result === 'error' || result.result < 1 || result.equation !== illion) {
+      clearResult()
+      document.getElementById('power').focus()
+      return
+    }
+    illion = illion.trim().replace(/^0+/u, '')
+    document.getElementById('illion').value = illion
+    updateIllion()
+    return
+  }
   let power = getParam('power')
-  if (!isNumeric(power) || power.includes('.') || Number(power) < 1) {
+  const result = evaluate(power)
+  if (result.result === 'error' || result.result < 1 || result.equation !== power) {
     clearResult()
     document.getElementById('power').focus()
     return
@@ -170,6 +208,13 @@ function initialize() {
   power = power.trim().replace(/^0+/u, '')
   document.getElementById('power').value = power
   updatePower()
+}
+
+function setInputpanel() {
+  let html = `<p>${MESSAGE.show}10^<input type="text" name="power" id="power" size="30" value="" onkeyup="updatePower()"></p>\n`
+  html += `<p style="display: inline;">= <div id="factor" style="display: inline;">${MESSAGE.one}</div> <input type="text" name="illion" id="illion" size="30" value="" onkeyup="updateIllion()">-illi<div id="suffix" style="display: inline;">on</div></p>`
+  html += MESSAGE.radio
+  document.getElementById('inputpanel').innerHTML = html
 }
 
 function getParam(name) {
@@ -203,21 +248,21 @@ function isNumeric(str) {
 
 function calcDigit() {
   const textIllion = document.getElementById('illion').value
-  let textPower = document.getElementById('power').value
-  textPower = textPower.trim().replace(/^0+/u, '')
-  const power = BigInt(textPower)
-  let output = `10<sup>${power}</sup>`
+  const textPower = document.getElementById('power').value
+  const result = evaluate(textPower)
+  const power = result.result
+  let output = `10<sup>${result.equation}</sup>`
   if (power < 1000 && textIllion.length < 9) {
     output += ` = 1${'0'.repeat(Number(power))}`
   }
   if (power < 100 && textIllion.length < 9) {
     return output
   }
-  const i = Number(`0.${textPower}`)
-  let tower = textPower.length
+  const i = Number(`0.${power.toString()}`)
+  let tower = power.toString().length
   let science = ` &times; 10^${(tower - 1).toString()})`
   if (tower < PREC) {
-    science = `<br>= 10^(${Number(textPower / 10 ** (tower - 1))}${science}`
+    science = `<br>= 10^(${Number(power.toString() / 10 ** (tower - 1))}${science}`
   } else {
     science = `<br>&approx; 10^(${(i * 10).toFixed(PREC)}${science}`
   }
@@ -292,13 +337,14 @@ function stein2(n) {
 
 function calcIllion() {
   const textIllion = document.getElementById('illion').value
-  const illion = BigInt(textIllion)
+  const result = evaluate(textIllion)
+  const illion = result.result
   const factor = document.getElementById('factor').textContent
   const suffix = document.getElementById('suffix').textContent
-  if (isNaN(Number(illion)) || illion < 1) {
+  if (result.result === 'error' || illion < 1) {
     return ''
   }
-  let name = `${factor} ${llion(textIllion)}${suffix}`
+  let name = `${factor} ${llion(illion.toString())}${suffix}`
   if (LANG === 'fr' && factor !== 'un') {
     name += 's'
   }
@@ -311,7 +357,7 @@ function calcIllion() {
 }
 
 function clearResult() {
-  document.getElementById('result').innerHTML = `<p>${MESSAGE.help}</p>`
+  document.getElementById('result').innerHTML = MESSAGE.help
 }
 
 function llion(n) {
@@ -372,4 +418,48 @@ function base(n) {
   name += HUN[hun]
   name = `${name.slice(0, -1)}illi` // Replace the final vowel
   return name
+}
+
+function evaluate(inputEquation) {
+  let equation = ''
+  let bigEquation = ''
+  let num = false
+  if (inputEquation === null) {
+    inputEquation = ''
+  }
+  for (let i = 0; i < inputEquation.length; i++) {
+    const c = inputEquation[i]
+    if (VALID_CHAR.includes(c)) {
+      equation += inputEquation[i]
+      if (NUM_CHAR.includes(c)) {
+        num = true
+      } else {
+        if (num) {
+          bigEquation += 'n'
+        }
+        num = false
+      }
+      if (c === '^') {
+        bigEquation += '**'
+      } else {
+        bigEquation += c
+      }
+    }
+  }
+  if (num) {
+    bigEquation += 'n'
+  }
+  let result
+  try {
+    result = eval(bigEquation)
+  } catch (e) {
+    result = 'error'
+  }
+  if (!result || result > UPPER_LIMIT) {
+    result = 'error'
+  }
+  return {
+    equation,
+    result
+  }
 }
