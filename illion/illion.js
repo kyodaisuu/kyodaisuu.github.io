@@ -7,6 +7,10 @@ License: MIT License
 // Precision
 const PREC = 10 // Numbers of digits after the decimal point to show
 const DELTA = 2 ** -50 // Allowable relative error for the Newton method
+const LIM_DIGITS = 24 // Upper limit of digits in power of 2 to prevent freezing of browzer
+
+// Global variable
+let ILLION = ''
 
 // Input characters
 const VALID_CHAR = '1234567890+-*/^()'
@@ -19,6 +23,7 @@ const MESSAGE = {
     show: 'Show',
     radio: '<p>in the <input type="radio" id="short" name="scale" value="short" checked="checked" onchange="updatePower()" />short scale<input type="radio" id="long" name="scale" value="long" onchange="updatePower()" />long scale</p>',
     help: '<p>Please input a number in either of the 2 boxes above.</p><p>Equation with characters +-*/^() is available.</p>',
+    wait: 'Please wait.',
     result: 'Result',
     result1: ' is called',
     result2: 'in the ',
@@ -47,6 +52,7 @@ const MESSAGE = {
     show: 'Montrer',
     radio: '<p>dans l\'échelle <input type="radio" id="long" name="scale" value="long" checked="checked" onchange="updatePower()" />longue<input type="radio" id="short" name="scale" value="short" onchange="updatePower()" />courte</p>',
     help: '<p>Veuillez saisir un numéro dans l\'une des deux cases ci-dessus.</p><p>L\'équation avec les caractères +-*/^() est disponible.</p>',
+    wait: 'Veuillez patienter.',
     result: 'Résultat',
     result1: 'est appelé',
     result2: 'dans le nom de l\'échelle ',
@@ -85,16 +91,24 @@ window.onload = function () {
   initialize()
 }
 
-function updateIllion() {
+async function updateIllion() {
+  await showWait()
   const textIllion = document.getElementById('illion').value
   const result = evaluate(textIllion)
   document.getElementById('illion').value = result.equation
-  if (result.result === 'error' || result.result < 1) {
+  ILLION = result.result
+  await showWait()
+  const illion = result.result
+  if (illion === 'error' || illion < 1) {
     document.getElementById('power').value = ''
     clearResult()
     return
   }
-  const illion = result.result
+  if (illion.toString().length > 2 ** LIM_DIGITS) {
+    document.getElementById('power').value = ''
+    document.getElementById('result').innerHTML = `<p><strong>Overflow</strong> (> 2<sup>${LIM_DIGITS}</sup> digits)</p>`
+    return
+  }
   const scale = getScale()
   let p = illion * 3n + 3n
   if (scale === 'long') {
@@ -106,17 +120,23 @@ function updateIllion() {
   showResult()
 }
 
-function updatePower() {
+async function updatePower() {
+  await showWait()
   const textPower = document.getElementById('power').value
   const result = evaluate(textPower)
   document.getElementById('power').value = result.equation
-  if (result.result === 'error' || result.result < 1) {
+  await showWait()
+  const power = result.result
+  if (power === 'error' || power < 1) {
     document.getElementById('illion').value = ''
-    document.getElementById('suffix').textContent = 'on'
     clearResult()
     return
   }
-  const power = result.result
+  if (power.toString().length > 2 ** LIM_DIGITS) {
+    document.getElementById('illion').value = ''
+    document.getElementById('result').innerHTML = `<p><strong>Overflow</strong> (> 2<sup>${LIM_DIGITS}</sup> digits)</p>`
+    return
+  }
   const scale = getScale()
   const factor = power % 3n
   const strFactor = [MESSAGE.one, MESSAGE.ten, MESSAGE.hundred][factor]
@@ -142,7 +162,16 @@ function updatePower() {
     }
   }
   document.getElementById('illion').value = illion
+  ILLION = illion
   showResult()
+}
+
+function showWait() {
+  document.getElementById('result').innerHTML = `<p><strong>${MESSAGE.wait}</strong></p>`
+  const milliseconds = 0
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds)
+  })
 }
 
 function showResult() {
@@ -335,12 +364,10 @@ function stein2(n) {
 }
 
 function calcIllion() {
-  const textIllion = document.getElementById('illion').value
-  const result = evaluate(textIllion)
-  const illion = result.result
+  const illion = ILLION
   const factor = document.getElementById('factor').textContent
   const suffix = document.getElementById('suffix').textContent
-  if (result.result === 'error' || illion < 1) {
+  if (illion < 1) {
     return ''
   }
   let name = `${factor} ${llion(illion.toString())}${suffix}`
@@ -356,6 +383,8 @@ function calcIllion() {
 }
 
 function clearResult() {
+  document.getElementById('factor').textContent = MESSAGE.one
+  document.getElementById('suffix').textContent = 'on'
   document.getElementById('result').innerHTML = MESSAGE.help
 }
 
