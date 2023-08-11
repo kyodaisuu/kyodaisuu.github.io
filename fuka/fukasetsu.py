@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+# See https://github.com/kyodaisuu/kyodaisuu.github.io/blob/main/fuka/Readme.md
 
 import math
 
