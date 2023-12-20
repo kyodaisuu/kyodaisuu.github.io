@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python calculator</title>
+  <link rel="stylesheet" type="text/css" href="../fish.css">
+</head>
+
+<body>
+
+<h1>Python calculator</h1>
+
+<p align="right">
+Written by <a href="https://googology.wikia.org/wiki/User:Kyodaisuu">Fish</a> on December 20, 2023.
+</p>
+
+<p>
+  You can execute any Python code. Just enter something in the box below and click the button.
+</p>
+
+<p><input id="code" value="2**100" size="40" />
+  <button onclick="evaluatePython()">Run</button>
+  <br />
+  <br /></p>
+  <div>Run</div>
+  <textarea id="output" style="width: 100%; -webkit-text-fill-color: black; opacity: 1;" rows="15" disabled=""></textarea>
+  
+  <script>
+      const output = document.getElementById("output");
+      const code = document.getElementById("code");
+  
+      function addToOutput(s) {
+      output.value += ">>>" + code.value + "\n" + s + "\n";
+      }
+  
+      output.value = "Initializing...\n";
+      // init Pyodide
+      async function main() {
+      let pyodide = await loadPyodide();
+      await pyodide.loadPackage("numpy");
+      await pyodide.loadPackage("scipy");
+      await pyodide.loadPackage("scikit-learn");
+      await pyodide.loadPackage("mpmath");
+      output.value += "Ready!\n";
+      return pyodide;
+      }
+      let pyodideReadyPromise = main();
+  
+      async function evaluatePython() {
+      let pyodide = await pyodideReadyPromise;
+      try {
+          let output = pyodide.runPython(code.value);
+          addToOutput(output);
+      } catch (err) {
+          addToOutput(err);
+      }
+      }
+  </script>
+
+<ul>
+<li>It is based on <a href="https://pyodide.org/en/stable/usage/quickstart.html#alternative-example">test code</a> of Pyodide, which runs Python on your browzer.</li>
+<li>numpy, scipy, scikit-learn, mpmath can be imported.</li>
+</ul>
+<hr>
+Author: <a href="https://googology.wikia.org/wiki/User:Kyodaisuu">Fish</a> - for contacting me, use <a href="https://twitter.com/kyodaisuu">Twitter</a> or <a href="https://googology.wikia.org/wiki/User_talk:Kyodaisuu">Googology Wiki</a>.
+
+</body>
+</html>
